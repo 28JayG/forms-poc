@@ -1,0 +1,36 @@
+import { StyledTextField } from 'App.styles';
+import ReactInputMask from 'react-input-mask';
+import _omit from 'lodash/omit';
+
+const DateInput = ({ ...otherProps }) => {
+  const omitedProps = _omit(
+    otherProps,
+    'id',
+    'required',
+    'value',
+    'minDate',
+    'maxDate',
+    'onChange',
+    'parentKey',
+    'skipValidation'
+  );
+  return (
+    <ReactInputMask
+      mask='99/99/9999'
+      required={otherProps.required}
+      onChange={(evt) =>
+        otherProps.onChange(
+          evt,
+          otherProps.id,
+          evt.target.value,
+          otherProps.parentKey
+        )
+      }
+      maskChar=' '
+    >
+      {() => <StyledTextField placeholder='mm/dd/yyyy' {...omitedProps} />}
+    </ReactInputMask>
+  );
+};
+
+export default DateInput;
