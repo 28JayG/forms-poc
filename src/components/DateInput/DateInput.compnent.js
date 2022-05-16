@@ -1,6 +1,7 @@
 import ReactInputMask from 'react-input-mask';
 import _omit from 'lodash/omit';
-import { StyledTextField } from 'components/Form/Form.styles';
+
+import { StyledTextField } from '../Form/Form.styles';
 
 const DateInput = ({ ...otherProps }) => {
   const omitedProps = _omit(

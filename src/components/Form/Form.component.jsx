@@ -5,8 +5,10 @@ import { useState } from 'react';
 
 import {
   getFormFields,
+  getValue,
   groupedDefinition,
   textFieldType,
+  validateFields,
 } from 'utils/forms.utils';
 
 import {
@@ -56,6 +58,9 @@ const DynamicForm = ({ extractedData }) => {
   };
 
   const getTextField = (field, specs, parentKey) => {
+    const value = getValue(field, parentKey, formValues);
+    const validity = validateFields(value, specs.datatype, specs.label);
+
     switch (specs.datatype) {
       case 'date':
         return (
@@ -65,6 +70,8 @@ const DynamicForm = ({ extractedData }) => {
             id={field}
             label={specs.label}
             name={field}
+            helperText={validity.text}
+            error={!validity.valid}
             required={specs.required}
             parentKey={parentKey}
             onChange={handleDateChange}
@@ -74,10 +81,13 @@ const DynamicForm = ({ extractedData }) => {
         return (
           <StyledTextField
             type={textFieldType(specs.datatype)}
+            value={value}
             label={specs.label}
             key={field}
             variant='filled'
             required={specs.required}
+            helperText={validity.text}
+            error={!validity.valid}
             id={field}
             name={field}
             onChange={(evt) => handleChange(evt, parentKey)}
