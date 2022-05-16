@@ -63,6 +63,7 @@ const DynamicForm = ({ extractedData }) => {
             key={field}
             variant='filled'
             id={field}
+            label={specs.label}
             name={field}
             required={specs.required}
             parentKey={parentKey}
@@ -119,11 +120,7 @@ const DynamicForm = ({ extractedData }) => {
           >
             Generate New Form
           </Button>
-          <Button
-            sx={{ width: 120, height: 45 }}
-            variant='contained'
-            type='submit'
-          >
+          <Button sx={{ width: 120 }} variant='contained' type='submit'>
             Save
           </Button>
         </ButtonContainer>
