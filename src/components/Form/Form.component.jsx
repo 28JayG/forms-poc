@@ -21,7 +21,7 @@ import {
 
 const DynamicForm = ({ extractedData }) => {
   const [formValues, setValues] = useState(getFormFields(extractedData));
-  const { setJson } = useJson();
+  const { resetJson } = useJson();
 
   const definition = groupedDefinition(extractedData);
 
@@ -126,7 +126,7 @@ const DynamicForm = ({ extractedData }) => {
           <Button
             sx={{ marginRight: 2 }}
             variant='outlined'
-            onClick={() => setJson(null)}
+            onClick={resetJson}
           >
             Generate New Form
           </Button>

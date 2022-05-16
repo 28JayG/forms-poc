@@ -67,9 +67,11 @@ export const validateFields = (value, dataType, label) => {
     case 'string':
       return validateStrings(value, label);
     case 'date':
-      const isValid = isDate(value, {
-        format: 'mm/dd/yyyy',
-      });
+      const isValid = value
+        ? isDate(value, {
+            format: 'mm/dd/yyyy',
+          })
+        : true;
 
       return {
         valid: isValid,
