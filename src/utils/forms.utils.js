@@ -20,12 +20,14 @@ export const groupedDefinition = (extractedData) => {
   return data;
 };
 
-export const getFormFields = (extractedData, defaultType = 'default') => {
+export const getDefaultValues = (extractedData, defaultType = 'default') => {
   const data = Object.keys(extractedData).reduce((groupedData, key) => {
     if (!extractedData[key]?.datatype) {
       groupedData[key] = getDefaultSubFields(extractedData[key], defaultType);
     } else {
-      groupedData[key] = deafultValue(extractedData[key].datatype, defaultType);
+      groupedData[key] =
+        extractedData[key].default_value ??
+        deafultValue(extractedData[key].datatype, defaultType);
     }
 
     return groupedData;
@@ -33,6 +35,15 @@ export const getFormFields = (extractedData, defaultType = 'default') => {
 
   return data;
 };
+
+export const getDefaultSubFields = (subFields) =>
+  Object.keys(subFields).reduce((subObj, subKey) => {
+    subObj[subKey] =
+      subFields[subKey].default_value ??
+      deafultValue(subFields[subKey].datatype);
+
+    return subObj;
+  }, {});
 
 export const getValue = (key, parentKey, fields) =>
   parentKey ? fields[parentKey][key] : fields[key];
@@ -84,13 +95,6 @@ export const validateFields = (value, dataType, label) => {
       };
   }
 };
-
-export const getDefaultSubFields = (subFields) =>
-  Object.keys(subFields).reduce((subObj, subKey) => {
-    subObj[subKey] = deafultValue(subFields[subKey].datatype);
-
-    return subObj;
-  }, {});
 
 export const deafultValue = (dataType) => {
   switch (dataType) {

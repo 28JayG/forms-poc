@@ -5,7 +5,7 @@ import { useJson } from 'providers/json.provider';
 import { useState } from 'react';
 
 import {
-  getFormFields,
+  getDefaultValues,
   getValue,
   groupedDefinition,
   textFieldType,
@@ -21,7 +21,7 @@ import {
 } from './Form.styles';
 
 const DynamicForm = ({ extractedData }) => {
-  const [formValues, setValues] = useState(getFormFields(extractedData));
+  const [formValues, setValues] = useState(getDefaultValues(extractedData));
   const { resetJson } = useJson();
 
   const definition = groupedDefinition(extractedData);
