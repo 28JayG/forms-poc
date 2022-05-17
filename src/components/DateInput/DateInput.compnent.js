@@ -19,6 +19,7 @@ const DateInput = ({ ...otherProps }) => {
     <ReactInputMask
       mask='99/99/9999'
       required={otherProps.required}
+      value={otherProps.value}
       onChange={(evt) =>
         otherProps.onChange(
           evt,

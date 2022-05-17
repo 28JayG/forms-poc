@@ -1,5 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import DateInput from 'components/DateInput/DateInput.compnent';
+import SelectField from 'components/SelectField/SelectField.component';
 import { useJson } from 'providers/json.provider';
 import { useState } from 'react';
 
@@ -45,6 +46,7 @@ const DynamicForm = ({ extractedData }) => {
 
   const handleChange = (evt, parentKey) => {
     const { id, name, value } = evt.target;
+    console.log(id, name, value);
 
     if (parentKey) {
       setValues((prev) => ({
@@ -69,12 +71,26 @@ const DynamicForm = ({ extractedData }) => {
             variant='filled'
             id={field}
             label={specs.label}
+            value={value}
             name={field}
             helperText={validity.text}
             error={!validity.valid}
             required={specs.required}
             parentKey={parentKey}
             onChange={handleDateChange}
+          />
+        );
+      case 'select':
+        return (
+          <SelectField
+            options={specs.options}
+            key={field}
+            id={field}
+            label={specs.label}
+            value={value}
+            name={field}
+            required={specs.required}
+            onChange={(evt) => handleChange(evt, parentKey)}
           />
         );
       default:
