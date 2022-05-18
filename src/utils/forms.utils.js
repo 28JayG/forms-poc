@@ -20,14 +20,18 @@ export const groupedDefinition = (extractedData) => {
   return data;
 };
 
-export const getDefaultValues = (extractedData, defaultType = 'default') => {
+export const getDefaultValues = (extractedData, defaultValues) => {
   const data = Object.keys(extractedData).reduce((groupedData, key) => {
     if (!extractedData[key]?.datatype) {
-      groupedData[key] = getDefaultSubFields(extractedData[key], defaultType);
+      groupedData[key] = getDefaultSubFields(
+        extractedData[key],
+        key,
+        defaultValues
+      );
     } else {
       groupedData[key] =
-        extractedData[key].default_value ??
-        deafultValue(extractedData[key].datatype, defaultType);
+        defaultValues[key] ??
+        deafultValue(extractedData[key].datatype, defaultValues);
     }
 
     return groupedData;
@@ -36,10 +40,10 @@ export const getDefaultValues = (extractedData, defaultType = 'default') => {
   return data;
 };
 
-export const getDefaultSubFields = (subFields) =>
+export const getDefaultSubFields = (subFields, parentKey, defaultValues) =>
   Object.keys(subFields).reduce((subObj, subKey) => {
     subObj[subKey] =
-      subFields[subKey].default_value ??
+      defaultValues[parentKey][subKey] ??
       deafultValue(subFields[subKey].datatype);
 
     return subObj;

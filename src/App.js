@@ -6,14 +6,17 @@ import JsonInput from 'components/JsonInput/JsonInput.component';
 import DynamicForm from 'components/Form/Form.component';
 
 function App() {
-  const { json } = useJson();
+  const { formData } = useJson();
 
   return (
     <Container>
-      {!json ? (
+      {!formData ? (
         <JsonInput />
       ) : (
-        <DynamicForm extractedData={JSON.parse(json).extracted_data} />
+        <DynamicForm
+          extractedData={formData.json.extracted_data}
+          defaultValues={formData.defaultValues}
+        />
       )}
     </Container>
   );

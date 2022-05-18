@@ -20,8 +20,10 @@ import {
   StyledTextField,
 } from './Form.styles';
 
-const DynamicForm = ({ extractedData }) => {
-  const [formValues, setValues] = useState(getDefaultValues(extractedData));
+const DynamicForm = ({ extractedData, defaultValues }) => {
+  const [formValues, setValues] = useState(
+    getDefaultValues(extractedData, defaultValues)
+  );
   const { resetJson } = useJson();
 
   const definition = groupedDefinition(extractedData);

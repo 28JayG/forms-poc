@@ -4,12 +4,12 @@ import { useState } from 'react';
 
 const JsonInput = () => {
   const { setJson } = useJson();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState({ json: '', defaultValues: '' });
 
   const handleChange = (evt) => {
-    const { value } = evt.target;
+    const { value, id } = evt.target;
 
-    setInput(value);
+    setInput((prev) => ({ ...prev, [id]: JSON.parse(value) }));
   };
 
   const handleSubmit = (evt) => {
@@ -20,7 +20,23 @@ const JsonInput = () => {
 
   return (
     <Box component='form' sx={{ padding: '20px 0' }} onSubmit={handleSubmit}>
-      <TextField required multiline fullWidth onChange={handleChange} />
+      <TextField
+        required
+        id='json'
+        multiline
+        fullWidth
+        label='Form Defenition'
+        onChange={handleChange}
+        sx={{ marginBottom: 2 }}
+      />
+      <TextField
+        required
+        id='defaultValues'
+        multiline
+        fullWidth
+        label='Default Values'
+        onChange={handleChange}
+      />
       <Button variant='contained' sx={{ margin: 2 }} type='submit'>
         Generate Form
       </Button>

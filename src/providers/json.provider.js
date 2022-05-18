@@ -1,13 +1,16 @@
 import { createContext, useState, useContext } from 'react';
 
 export const JsonContext = createContext({
-  json: '',
+  formData: '',
   setJson: (json) => {},
   resetJson: () => {},
 });
 
 const JsonProvider = ({ children }) => {
-  const [json, setJson] = useState(localStorage.getItem('json') || '');
+  const [formData, setJson] = useState(
+    JSON.parse(localStorage.getItem('json')) || ''
+  );
+
   const resetJson = () => {
     setJson('');
     localStorage.removeItem('json');
@@ -16,10 +19,10 @@ const JsonProvider = ({ children }) => {
   return (
     <JsonContext.Provider
       value={{
-        json,
-        setJson: (text) => {
-          localStorage.setItem('json', text);
-          setJson(text);
+        formData,
+        setJson: (formData) => {
+          localStorage.setItem('json', JSON.stringify(formData));
+          setJson(formData);
         },
         resetJson,
       }}
