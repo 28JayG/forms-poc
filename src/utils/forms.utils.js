@@ -54,13 +54,13 @@ export const getValue = (key, parentKey, fields) =>
 
 export const validateStrings = (value, label) => {
   switch (label.toLowerCase()) {
-    case 'city':
-    case 'state':
-      const isValid = !/\d/.test(value);
-      return {
-        valid: isValid,
-        text: isValid ? '' : `${label} should not containe a number`,
-      };
+    // case 'city':
+    // case 'state':
+      // const isValid = !/\d/.test(value);
+      // return {
+      //   valid: isValid,
+      //   text: isValid ? '' : `${label} should not containe a number`,
+      // };
 
     default:
       return {
