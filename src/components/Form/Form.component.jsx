@@ -148,9 +148,11 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
           >
             Generate New Form
           </Button>
-          <Button sx={{ width: 120 }} variant='contained' type='submit'>
-            Save
-          </Button>
+          {Object.keys(definition).length && (
+            <Button sx={{ width: 120 }} variant='contained' type='submit'>
+              Save
+            </Button>
+          )}
         </ButtonContainer>
       </Form>
     </>

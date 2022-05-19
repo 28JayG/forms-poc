@@ -14,8 +14,8 @@ function App() {
         <JsonInput />
       ) : (
         <DynamicForm
-          extractedData={formData.json.extracted_data}
-          defaultValues={formData.defaultValues}
+          extractedData={formData.definition.extracted_data ?? {}}
+          defaultValues={formData.defaultValues.extracted_data ?? {}}
         />
       )}
     </Container>
