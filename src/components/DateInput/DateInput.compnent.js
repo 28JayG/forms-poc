@@ -4,7 +4,7 @@ import _omit from 'lodash/omit';
 import { StyledTextField } from '../Form/Form.styles';
 
 const DateInput = ({ ...otherProps }) => {
-  const omitedProps = _omit(
+  const selectedProps = _omit(
     otherProps,
     'id',
     'required',
@@ -15,6 +15,7 @@ const DateInput = ({ ...otherProps }) => {
     'parentKey',
     'skipValidation'
   );
+
   return (
     <ReactInputMask
       mask='99/99/9999'
@@ -28,9 +29,9 @@ const DateInput = ({ ...otherProps }) => {
           otherProps.parentKey
         )
       }
-      maskChar=' '
+      maskChar=''
     >
-      {() => <StyledTextField placeholder='mm/dd/yyyy' {...omitedProps} />}
+      {() => <StyledTextField placeholder='mm/dd/yyyy' {...selectedProps} />}
     </ReactInputMask>
   );
 };

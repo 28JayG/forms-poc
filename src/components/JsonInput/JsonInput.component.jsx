@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, InputAdornment, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import { useJson } from 'providers/json.provider';
 
 const defaultInput = { definition: '', defaultValues: '' };

@@ -56,7 +56,6 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
 
   const handleChange = (evt, parentKey) => {
     const { id, name, value } = evt.target;
-    console.log(id, name, value);
 
     if (parentKey) {
       setValues((prev) => ({
@@ -75,6 +74,8 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
 
     switch (specs.datatype) {
       case 'date':
+        console.log(specs.label);
+        console.log({ field, parentKey, formValues });
         return (
           <DateInput
             key={field}
