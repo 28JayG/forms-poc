@@ -1,11 +1,21 @@
-import { Box, Button, TextField } from '@mui/material';
-import { useJson } from 'providers/json.provider';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, InputAdornment, TextField } from '@mui/material';
+import { useJson } from 'providers/json.provider';
+
+const defaultInput = { definition: '', defaultValues: '' };
+
+const getInputValues = (formData) => ({
+  definition: JSON.stringify(formData.definition, null, 4) ?? '',
+  defaultValues: JSON.stringify(formData.defaultValues, null, 4) ?? '',
+});
 
 const JsonInput = () => {
-  const { setJson } = useJson();
-  const [input, setInput] = useState({ definition: '', defaultValues: '' });
-  const [error, setError] = useState({ definition: '', defaultValues: '' });
+  const { setJson, formData } = useJson();
+  const [input, setInput] = useState(getInputValues(formData));
+  const [error, setError] = useState(defaultInput);
+
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     const { value, id } = evt.target;
@@ -33,9 +43,10 @@ const JsonInput = () => {
       return reducedObject;
     }, {});
 
-    setError((prev) => ({ defaultValues: '', definition: '' }));
-
+    setError(defaultInput);
     setJson(finalObject);
+
+    navigate('/form');
   };
 
   const disableSubmit = !!error.definition || !!error.defaultValues;
@@ -47,10 +58,11 @@ const JsonInput = () => {
         id='definition'
         multiline
         fullWidth
+        value={input.definition}
         error={!!error.definition}
         helperText={error.definition ?? ''}
         onBlur={() => validateJson(input.definition, 'definition')}
-        label='Form Defenition'
+        label='Form Definition'
         onChange={handleChange}
         sx={{ marginBottom: 2 }}
       />
@@ -58,6 +70,7 @@ const JsonInput = () => {
         required
         id='defaultValues'
         error={!!error.defaultValues}
+        value={input.defaultValues}
         helperText={error.defaultValues ?? ''}
         onBlur={() => validateJson(input.defaultValues, 'defaultValues')}
         multiline

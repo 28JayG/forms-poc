@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
+import { useJson } from 'providers/json.provider';
 import DateInput from 'components/DateInput/DateInput.compnent';
 import SelectField from 'components/SelectField/SelectField.component';
-import { useJson } from 'providers/json.provider';
-import { useState } from 'react';
 
 import {
   getDefaultValues,
@@ -24,7 +25,12 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
   const [formValues, setValues] = useState(
     getDefaultValues(extractedData, defaultValues)
   );
-  const { resetJson } = useJson();
+  const navigate = useNavigate();
+  const { resetJson, setJson, formData } = useJson();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const definition = groupedDefinition(extractedData);
 
@@ -32,6 +38,8 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
     evt.preventDefault();
 
     console.log(formValues);
+    setJson({ ...formData, defaultValues: { extracted_data: formValues } });
+    navigate('/');
   };
 
   const handleDateChange = (evt, id, value, parentKey) => {
@@ -134,6 +142,28 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
     );
   };
 
+  const retry = () => {
+    resetJson();
+    navigate('/');
+  };
+
+  if (!Object.keys(defaultValues).length || !Object.keys(definition).length) {
+    return (
+      <>
+        <Typography>
+          Failed to generate form, might be one of these cases:
+        </Typography>
+        <ul>
+          <li>Default Fields JSON must be empty</li>
+          <li>Definition JSON must be empty</li>
+        </ul>
+        <Button sx={{ marginRight: 2 }} variant='contained' onClick={retry}>
+          Retry
+        </Button>
+      </>
+    );
+  }
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -141,11 +171,7 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
           renderGrourpFields(definition[key], key)
         )}
         <ButtonContainer>
-          <Button
-            sx={{ marginRight: 2 }}
-            variant='outlined'
-            onClick={resetJson}
-          >
+          <Button sx={{ marginRight: 2 }} variant='outlined' onClick={retry}>
             Generate New Form
           </Button>
           {Object.keys(definition).length && (

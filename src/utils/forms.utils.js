@@ -42,6 +42,11 @@ export const getDefaultValues = (extractedData, defaultValues) => {
 
 export const getDefaultSubFields = (subFields, parentKey, defaultValues) =>
   Object.keys(subFields).reduce((subObj, subKey) => {
+    if (!defaultValues[parentKey]) {
+      subObj[subKey] = deafultValue(subFields[subKey].datatype);
+      return subObj;
+    }
+
     subObj[subKey] =
       defaultValues[parentKey][subKey] ??
       deafultValue(subFields[subKey].datatype);
@@ -56,11 +61,11 @@ export const validateStrings = (value, label) => {
   switch (label.toLowerCase()) {
     // case 'city':
     // case 'state':
-      // const isValid = !/\d/.test(value);
-      // return {
-      //   valid: isValid,
-      //   text: isValid ? '' : `${label} should not containe a number`,
-      // };
+    // const isValid = !/\d/.test(value);
+    // return {
+    //   valid: isValid,
+    //   text: isValid ? '' : `${label} should not containe a number`,
+    // };
 
     default:
       return {

@@ -1,3 +1,4 @@
+import { Route, Routes } from 'react-router-dom';
 import { Container } from '@mui/material';
 
 import { useJson } from 'providers/json.provider';
@@ -10,14 +11,19 @@ function App() {
 
   return (
     <Container>
-      {!formData ? (
-        <JsonInput />
-      ) : (
-        <DynamicForm
-          extractedData={formData.definition.extracted_data ?? {}}
-          defaultValues={formData.defaultValues.extracted_data ?? {}}
+      <Routes>
+        <Route path='/' element={<JsonInput />} />
+
+        <Route
+          path='/form'
+          element={
+            <DynamicForm
+              extractedData={formData.definition?.extracted_data ?? {}}
+              defaultValues={formData.defaultValues?.extracted_data ?? {}}
+            />
+          }
         />
-      )}
+      </Routes>
     </Container>
   );
 }
