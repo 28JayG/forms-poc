@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RootProvider from 'providers/root.provider';
 import { BrowserRouter } from 'react-router-dom';
+import ManageVersionChange from 'components/ManageVersionChange/ManageVersionChange.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

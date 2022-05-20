@@ -148,6 +148,8 @@ const DynamicForm = ({ extractedData, defaultValues }) => {
     navigate('/');
   };
 
+  console.log(defaultValues, definition);
+
   if (!Object.keys(defaultValues).length || !Object.keys(definition).length) {
     return (
       <>

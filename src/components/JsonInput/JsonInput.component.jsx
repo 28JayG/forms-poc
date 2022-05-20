@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
 import { useJson } from 'providers/json.provider';
+import { ButtonContainer } from 'components/Form/Form.styles';
 
 const defaultInput = { definition: '', defaultValues: '' };
 
@@ -49,6 +50,23 @@ const JsonInput = () => {
     navigate('/form');
   };
 
+  const clearField = (evt, fieldId) => {
+    evt.preventDefault();
+    const finalObject = Object.keys(input).reduce((reducedObject, key) => {
+      if (key === fieldId) {
+        reducedObject[key] = '';
+        return reducedObject;
+      }
+
+      reducedObject[key] = input[key] ? JSON.parse(input[key]) : '';
+      return reducedObject;
+    }, {});
+
+    setInput((prev) => ({ ...prev, [fieldId]: '' }));
+
+    setJson(finalObject);
+  };
+
   const disableSubmit = !!error.definition || !!error.defaultValues;
 
   return (
@@ -78,14 +96,34 @@ const JsonInput = () => {
         label='Default Values'
         onChange={handleChange}
       />
-      <Button
-        disabled={disableSubmit}
-        variant='contained'
-        sx={{ margin: 2 }}
-        type='submit'
-      >
-        Generate Form
-      </Button>
+      <ButtonContainer>
+        <Button
+          disabled={disableSubmit}
+          variant='contained'
+          sx={{ margin: 2 }}
+          type='submit'
+        >
+          Generate Form
+        </Button>
+        <Button
+          disabled={!input.definition}
+          variant='outlined'
+          onClick={(evt) => clearField(evt, 'definition')}
+          sx={{ margin: 2 }}
+          type='button'
+        >
+          Clear Definition
+        </Button>
+        <Button
+          disabled={!input.defaultValues}
+          variant='outlined'
+          onClick={(evt) => clearField(evt, 'defaultValues')}
+          sx={{ margin: 2 }}
+          type='button'
+        >
+          Clear Default Values
+        </Button>
+      </ButtonContainer>
     </Box>
   );
 };
